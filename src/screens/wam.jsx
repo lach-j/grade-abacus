@@ -3,6 +3,32 @@ import DynamicFormTable from '../components/dynamicFormTable';
 
 const WAM = () => {
   const [courseData, setCourseData] = useState([{ mark: '0', units: '10', level: '1000' }]);
+  const [wam, setWam] = useState(null);
+
+  const weightings = {
+    1000: 1,
+    2000: 2,
+    3000: 3,
+    4000: 4,
+    5000: 4,
+    6000: 4,
+  };
+
+  const calculateWAM = () => {
+    let totalMark = 0;
+    let totalWeight = 0;
+    courseData.forEach((course) => {
+      let mark = parseFloat(course.mark);
+      mark = mark <= 44 ? 44 : mark;
+      let weight = weightings[course.level];
+      let units = parseInt(course.units);
+      totalMark += mark * weight * units;
+      totalWeight += weight * units;
+    });
+    let calcWam = Math.round((totalMark * 10) / totalWeight) / 10;
+    setWam(calcWam);
+  };
+
   return (
     <>
       <h1>WAM Calculator</h1>
@@ -26,6 +52,8 @@ const WAM = () => {
         ]}
         onChange={(data) => setCourseData(data)}
       />
+      <button onClick={() => calculateWAM()}>Calculate WAM</button>
+      {wam && <p>Calculated WAM: {wam}</p>}
     </>
   );
 };
