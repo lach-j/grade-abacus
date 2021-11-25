@@ -30,8 +30,8 @@ const WAM = () => {
   };
 
   return (
-    <>
-      <h1>WAM Calculator</h1>
+    <div className="flex flex-col gap-5 justify-center items-center mt-24 mb-20">
+      <h1 className="text-2xl mb-5">WAM Calculator</h1>
       <DynamicFormTable
         data={courseData}
         columns={[
@@ -52,9 +52,20 @@ const WAM = () => {
         ]}
         onChange={(data) => setCourseData(data)}
       />
-      <button onClick={() => calculateWAM()}>Calculate WAM</button>
-      {wam && <p>Calculated WAM: {wam}</p>}
-    </>
+      <div className="flex flex-col md:flex-row gap-5 mb-10 w-full px-8 justify-center">
+        <button
+          className="py-2 px-5 rounded-full text-white hover:opacity-70 transition-opacity bg-purple-500"
+          onClick={() => calculateWAM()}
+        >
+          Calculate WAM
+        </button>
+      </div>
+      {wam && (
+        <p>
+          Calculated WAM: <span className="font-bold">{wam}</span>
+        </p>
+      )}
+    </div>
   );
 };
 
