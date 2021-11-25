@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DynamicFormTable from '../components/dynamicFormTable';
+import DynamicFormTable from '../components/dynamicFormTable/dynamicFormTable';
 
 const WAM = () => {
   const [courseData, setCourseData] = useState([{ mark: '0', units: '10', level: '1000' }]);
@@ -58,6 +58,12 @@ const WAM = () => {
           onClick={() => calculateWAM()}
         >
           Calculate WAM
+        </button>
+        <button
+          className="py-2 px-5 rounded-full text-white hover:opacity-70 transition-opacity bg-red-500"
+          onClick={() => setCourseData([{ mark: '0', units: '10', level: '1000' }])}
+        >
+          Clear
         </button>
       </div>
       {wam && (
