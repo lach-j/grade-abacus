@@ -66,6 +66,7 @@ const DynamicFormTable = ({ data, onChange, columns }) => {
                       </select>
                     ) : (
                       <input
+                        {...{ placeholder: col.placeholder }}
                         type={col.type}
                         name={col.property}
                         value={x[col.property]}

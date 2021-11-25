@@ -36,6 +36,7 @@ const WAM = () => {
         data={courseData}
         columns={[
           {
+            placeholder: 'optional',
             title: 'Course Code',
             property: 'courseCode',
             type: 'text',
