@@ -1,5 +1,6 @@
 import React from 'react';
 import { IoIosAddCircle, IoIosRemoveCircle } from 'react-icons/io';
+import './dynamicFormTable.module.css';
 
 const DynamicFormTable = ({ data, onChange, columns }) => {
   const handleInputChange = (e, index) => {
@@ -26,7 +27,7 @@ const DynamicFormTable = ({ data, onChange, columns }) => {
   };
 
   return (
-    <table>
+    <table className="text-left w-full md:w-auto">
       <thead>
         <tr>
           <th></th>
@@ -38,8 +39,8 @@ const DynamicFormTable = ({ data, onChange, columns }) => {
       <tbody>
         {data.map((x, i) => {
           return (
-            <tr>
-              <td>
+            <tr className="transition-colors duration-200 hover:bg-purple-200">
+              <td className="flex-auto items-center justify-center rounded-l-full">
                 <button
                   className="block"
                   onClick={() => (data.length !== 1 ? handleRemoveRow(i) : null)}
@@ -52,7 +53,7 @@ const DynamicFormTable = ({ data, onChange, columns }) => {
               </td>
               {columns.map((col, j) => {
                 return (
-                  <td>
+                  <td className={`${j === columns.length - 1 && 'rounded-r-full'}`}>
                     {col.type === 'select' ? (
                       <select
                         name={col.property}

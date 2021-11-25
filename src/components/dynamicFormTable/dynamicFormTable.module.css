@@ -1,0 +1,9 @@
+td,
+th {
+  @apply px-2 py-1 md:px-4 md:py-2 w-min;
+}
+
+input,
+select {
+  @apply px-2 py-1 rounded-md bg-gray-100 w-full md:w-32;
+}
