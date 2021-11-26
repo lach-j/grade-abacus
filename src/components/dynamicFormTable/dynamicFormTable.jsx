@@ -57,7 +57,7 @@ const DynamicFormTable = ({ data, onChange, columns }) => {
                 >
                   <IoIosRemoveCircle
                     size={20}
-                    className={`text-${data.length !== 1 ? 'red-500' : 'gray-500'}`}
+                    className={`${data.length !== 1 ? 'text-red-500' : 'text-gray-500'}`}
                   />
                 </button>
               </td>
