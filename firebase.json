@@ -3,22 +3,15 @@
     "public": "build",
     "headers": [
       {
-        "source": "/**",
+        "source": "**/*.@(js.map|js|css|txt|html|png)",
         "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "no-cache, no-store, must-revalidate"
-          }
+          { "key": "Cache-Control", "value": "s-maxage=31536000,immutable" }
         ]
       },
       {
-        "source":
-          "**/*.@(jpg|jpeg|gif|png|svg|webp|js|css|eot|otf|ttf|ttc|woff|woff2|font.css)",
+        "source": "**",
         "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "max-age=604800"
-          }
+          { "key": "Cache-Control", "value": "no-cache" }
         ]
       }
     ],
