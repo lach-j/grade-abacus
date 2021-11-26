@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+const pages = [
+  { path: '/', text: 'Home' },
+  { path: '/wam', text: 'WAM' },
+  { path: '/gpa', text: 'GPA' },
+];
+
 const Navbar = () => {
-  const pages = [
-    { path: '/', text: 'Home' },
-    { path: '/wam', text: 'WAM' },
-    { path: '/gpa', text: 'GPA' },
-  ];
   const location = useLocation();
+  useEffect(() => {
+    document.title = `Grade Abacus | ${
+      pages.find((p) => {
+        return p.path === location.pathname;
+      }).text
+    }`;
+  }, [location]);
   return (
     <nav className="flex gap-x-2">
       {pages.map((page) => {
