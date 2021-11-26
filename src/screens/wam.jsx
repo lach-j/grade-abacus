@@ -47,7 +47,7 @@ const WAM = () => {
     if (cookies.wam) {
       setCourseData(cookies.wam);
     }
-  }, []);
+  }, [cookies.wam]);
 
   return (
     <div className="flex flex-col gap-5 justify-center items-center mt-24 mb-20">
