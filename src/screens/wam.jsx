@@ -4,6 +4,7 @@ import DynamicFormTable from '../components/dynamicFormTable/dynamicFormTable';
 const WAM = () => {
   const [courseData, setCourseData] = useState([{ mark: '0', units: '10', level: '1000' }]);
   const [wam, setWam] = useState(null);
+  const [error, setError] = useState(false);
 
   const weightings = {
     1000: 1,
@@ -17,7 +18,12 @@ const WAM = () => {
   const calculateWAM = () => {
     let totalMark = 0;
     let totalWeight = 0;
+    let localError = false;
     courseData.forEach((course) => {
+      if (course.level === '' || course.mark === '' || course.units === '') {
+        localError = true;
+        return;
+      }
       let mark = parseFloat(course.mark);
       mark = mark <= 44 ? 44 : mark;
       let weight = weightings[course.level];
@@ -25,7 +31,12 @@ const WAM = () => {
       totalMark += mark * weight * units;
       totalWeight += weight * units;
     });
+    if (localError) {
+      setError(true);
+      return;
+    }
     let calcWam = Math.round((totalMark * 10) / totalWeight) / 10;
+    setError(false);
     setWam(calcWam);
   };
 
@@ -38,6 +49,7 @@ const WAM = () => {
           {
             placeholder: 'optional',
             title: 'Course Code',
+            optional: true,
             property: 'courseCode',
             type: 'text',
           },
@@ -62,15 +74,21 @@ const WAM = () => {
         </button>
         <button
           className="py-2 px-5 rounded-full text-white hover:opacity-70 transition-opacity bg-red-500"
-          onClick={() => setCourseData([{ mark: '0', units: '10', level: '1000' }])}
+          onClick={() => {
+            setCourseData([{ mark: '0', units: '10', level: '1000' }]);
+            setError(false);
+          }}
         >
           Clear
         </button>
       </div>
-      {wam && (
+      {wam && !error && (
         <p>
           Calculated WAM: <span className="font-bold">{wam}</span>
         </p>
+      )}
+      {error && (
+        <p className="text-red-500">Please check that all required fields are not blank.</p>
       )}
     </div>
   );

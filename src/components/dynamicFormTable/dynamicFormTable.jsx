@@ -26,13 +26,23 @@ const DynamicFormTable = ({ data, onChange, columns }) => {
     onChange(list);
   };
 
+  const handleBlur = (e, optional) => {
+    if (!optional && e.target.value === '') {
+      e.target.classList.add('outline-red');
+    }
+  };
+
+  const handleFocus = (e) => {
+    e.target.classList.remove('outline-red');
+  };
+
   return (
     <table className="text-left w-full md:w-auto">
       <thead>
         <tr>
           <th></th>
           {columns.map((col) => {
-            return <th>{col.title}</th>;
+            return <th className={col.optional ? 'hidden md:table-cell' : null}>{col.title}</th>;
           })}
         </tr>
       </thead>
@@ -53,7 +63,11 @@ const DynamicFormTable = ({ data, onChange, columns }) => {
               </td>
               {columns.map((col, j) => {
                 return (
-                  <td className={`${j === columns.length - 1 && 'rounded-r-full'}`}>
+                  <td
+                    className={`${col.optional ? 'hidden md:table-cell' : null} ${
+                      j === columns.length - 1 && 'rounded-r-full'
+                    }`}
+                  >
                     {col.type === 'select' ? (
                       <select
                         name={col.property}
@@ -67,6 +81,8 @@ const DynamicFormTable = ({ data, onChange, columns }) => {
                     ) : (
                       <input
                         {...{ placeholder: col.placeholder }}
+                        onBlur={(e) => handleBlur(e, col.optional)}
+                        onFocus={(e) => handleFocus(e)}
                         type={col.type}
                         name={col.property}
                         value={x[col.property]}
