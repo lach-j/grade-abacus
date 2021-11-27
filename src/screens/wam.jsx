@@ -69,7 +69,7 @@ const WAM = () => {
             default: 1000,
             property: 'level',
             type: 'select',
-            options: [1000, 2000, 3000, 4000, 5000],
+            options: Object.keys(weightings),
           },
         ]}
         onChange={(data) => setCourseData(data)}
