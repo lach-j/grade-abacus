@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
 import DynamicFormTable from '../components/dynamicFormTable/dynamicFormTable';
+
+const storageItem = 'wam';
 
 const WAM = () => {
   const [courseData, setCourseData] = useState([{ mark: '0', units: '10', level: '1000' }]);
-  const [cookies, setCookie] = useCookies(['wam']);
 
   const [wam, setWam] = useState(null);
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const savedWam = localStorage.getItem(storageItem);
+    if (savedWam) {
+      setCourseData(JSON.parse(savedWam));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(storageItem, JSON.stringify(courseData));
+  }, [courseData]);
 
   const weightings = {
     1000: 1,
@@ -42,12 +53,6 @@ const WAM = () => {
     setError(false);
     setWam(calcWam);
   };
-
-  useEffect(() => {
-    if (cookies.wam) {
-      setCourseData(cookies.wam);
-    }
-  }, [cookies.wam]);
 
   return (
     <div className="flex flex-col gap-5 justify-center items-center mt-24 mb-20">
@@ -89,15 +94,6 @@ const WAM = () => {
           }}
         >
           Clear
-        </button>
-        <button
-          className={`py-2 px-5 rounded-full text-white hover:opacity-70 transition-opacity bg-green-500`}
-          onClick={() => {
-            setCookie('wam', courseData, { path: '/' });
-            alert('Your marks have been saved!');
-          }}
-        >
-          Save
         </button>
       </div>
       {wam && !error && (

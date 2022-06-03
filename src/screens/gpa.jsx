@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
 import DynamicFormTable from '../components/dynamicFormTable/dynamicFormTable';
+
+const storageItem = 'gpa';
 
 const GPA = () => {
   const [courseData, setCourseData] = useState([{ grade: 'C', units: '10' }]);
-  const [cookies, setCookie] = useCookies(['gpa']);
 
   const [gpa, setGpa] = useState(null);
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const savedGPA = localStorage.getItem(storageItem);
+    if (savedGPA) {
+      setCourseData(JSON.parse(savedGPA));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(storageItem, JSON.stringify(courseData));
+  }, [courseData]);
 
   const grades = {
     HD: 7,
@@ -40,12 +51,6 @@ const GPA = () => {
     setError(false);
     setGpa(calcGpa);
   };
-
-  useEffect(() => {
-    if (cookies.gpa) {
-      setCourseData(cookies.gpa);
-    }
-  }, [cookies.gpa]);
 
   return (
     <div className="flex flex-col gap-5 justify-center items-center mt-24 mb-20">
@@ -86,15 +91,6 @@ const GPA = () => {
           }}
         >
           Clear
-        </button>
-        <button
-          className={`py-2 px-5 rounded-full text-white hover:opacity-70 transition-opacity bg-green-500`}
-          onClick={() => {
-            setCookie('gpa', courseData, { path: '/' });
-            alert('Your marks have been saved!');
-          }}
-        >
-          Save
         </button>
       </div>
       {gpa && !error && (
