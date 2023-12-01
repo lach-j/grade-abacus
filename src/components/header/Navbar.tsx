@@ -13,7 +13,7 @@ const Navbar = () => {
     document.title = `Grade Abacus | ${
       pages.find((p) => {
         return p.path === location.pathname;
-      }).text
+      })?.text
     }`;
   }, [location]);
   return (
@@ -22,8 +22,8 @@ const Navbar = () => {
         return (
           <Link
             className={`${
-              page.path === location.pathname ? 'bg-pink-700' : 'bg-purple-700'
-            } px-2 py-1 bg-purple-700 rounded-lg hover:bg-purple-600`}
+              page.path === location.pathname ? 'bg-pink-700' : 'bg-purple-800'
+            } px-2 py-1 rounded-lg hover:bg-purple-700`}
             to={page.path}
           >
             {page.text}
